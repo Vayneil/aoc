@@ -22,6 +22,7 @@ class Updater {
         IResponse input = await DownloadInput(context, address, year, day);
         CreateDirectory(year, day);
         SaveInput(input, year, day);
+        CreateSolverTemplate(year, day);
     }
 
     private string getSession() {
@@ -61,5 +62,24 @@ class Updater {
         if (!Directory.Exists(dir)) {
             Directory.CreateDirectory(dir);
         }
+    }
+
+    private void CreateSolverTemplate(int year, int day) {
+        string template = $@"namespace AdventOfCode.Year{year}.Day{day};
+
+public static class Solver {{
+    private readonly static string path = ""./{year}/{day}/input.txt"";
+
+    public static List<int> Solution(){{
+        List<int> results = [];
+
+        return results;
+    }}
+}} 
+";
+        
+        string file = Path.Combine(Dir(year, day), $"{day}.cs");
+        File.WriteAllText(file, template);
+
     }
 }
