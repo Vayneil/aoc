@@ -31,7 +31,7 @@ Action? ParseAction(string[] args, string[] regexes, Func<string[], Action> pars
     }
 }
 
-void DisplayResults(List<int>? results) {
+void DisplayResults(List<object>? results) {
     if (results is null) {
         throw new Exception(message: "Results are null");
     }
@@ -57,7 +57,7 @@ void RunSolver(int year, int day) {
     if (type is not null) {
         MethodInfo? method = type.GetMethod("Solution") ?? 
                 throw new Exception(message: "No Solution method found");
-        List<int>? results = method.Invoke(null, null) as List<int>;
+        List<object>? results = method.Invoke(null, null) as List<object>;
         DisplayResults(results);
         return;
     }
